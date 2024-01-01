@@ -3,12 +3,14 @@ package api
 import "github.com/gin-gonic/gin"
 
 type Server struct {
-	Router *gin.Engine
+	Router     *gin.Engine
+	SmsService SMSService
 }
 
-func NewServer(router *gin.Engine) *Server {
+func NewServer(router *gin.Engine, smsService SMSService) *Server {
 	return &Server{
-		Router: router,
+		Router:     router,
+		SmsService: smsService,
 	}
 }
 

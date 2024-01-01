@@ -11,6 +11,8 @@ const (
 	TWILIO_ACCOUNT_SID_KEY = "TWILIO_ACCOUNT_SID"
 	TWILIO_AUTHTOKEN_KEY   = "TWILIO_AUTHTOKEN"
 	TWILIO_SERVICES_ID_KEY = "TWILIO_SERVICES_ID"
+	VONAGE_API_KEY         = "VONAGE_API_KEY"
+	VONAGE_API_SECRET      = "VONAGE_API_SECRET"
 )
 
 type TwilioConfig struct {
@@ -19,19 +21,22 @@ type TwilioConfig struct {
 	TWILIO_SERVICES_ID string
 }
 
-func loadENV() (twilioConfig *TwilioConfig, err error) {
+type VonageConfig struct {
+	ApiKey    string
+	ApiSecret string
+}
+
+func LoadConfig() (vonageConfig *VonageConfig, err error) {
 	err = godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Load env file fail with %v", err)
 		return nil, err
 	}
-	TWILIO_ACCOUNT_SID := os.Getenv(TWILIO_ACCOUNT_SID_KEY)
-	TWILIO_AUTHTOKEN := os.Getenv(TWILIO_AUTHTOKEN_KEY)
-	TWILIO_SERVICES_ID := os.Getenv(TWILIO_SERVICES_ID_KEY)
-	twilioConfig = &TwilioConfig{
-		TWILIO_ACCOUNT_SID: TWILIO_ACCOUNT_SID,
-		TWILIO_AUTHTOKEN:   TWILIO_AUTHTOKEN,
-		TWILIO_SERVICES_ID: TWILIO_SERVICES_ID,
+	ApiKey := os.Getenv(VONAGE_API_KEY)
+	ApiSecret := os.Getenv(VONAGE_API_SECRET)
+	vonageConfig = &VonageConfig{
+		ApiKey:    ApiKey,
+		ApiSecret: ApiSecret,
 	}
-	return twilioConfig, nil
+	return vonageConfig, nil
 }
